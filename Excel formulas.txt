@@ -1,0 +1,6 @@
+EXCEL FORMULAS:
+=SUBSTITUTE(fundamentals!Z1," ", "_")
+=MAX(fundamentals!Z1:Z1782)
+=IF(A2 <= 127, "TINYINT", IF(A2<= 32767, "SMALLINT", IF(A2 <= 8388607, "MEDIUMINT", IF(A2 <= 2147483647, "INT", IF(A2 <= 9223372036854770000, "BIGINT","ERROR")))))
+=IF(COUNTBLANK(fundamentals!Z1:Z1782) > 0, "", "NOT NULL")
+=CONCAT(A1," ", A3, " ", A4, ", ")
