@@ -15,5 +15,6 @@ RMySQL::dbListTables(conn)
 
 # Return a data frame representation of MySQL table
 securities <- RMySQL::dbReadTable(conn, "securities")
+prices     <- RMySQL::dbReadTable(conn, "prices")
 
-
+RMySQL::dbDisconnect(conn)
