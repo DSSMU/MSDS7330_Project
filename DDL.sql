@@ -35,10 +35,10 @@ CREATE TABLE prices
 (
 	date DATE NOT NULL,
 	symbol VARCHAR(5)  NOT NULL,
-	open  DECIMAL(6,6) NOT NULL,
-	close DECIMAL(6,6) NOT NULL,
-	low   DECIMAL(6,6) NOT NULL,
-	high  DECIMAL(6,6) NOT NULL,
+	open  DECIMAL(10,6) NOT NULL,
+	close DECIMAL(10,6) NOT NULL,
+	low   DECIMAL(10,6) NOT NULL,
+	high  DECIMAL(10,6) NOT NULL,
 	volume INT,
 	CONSTRAINT FOREIGN KEY (symbol) REFERENCES securities(symbol)
 		ON DELETE CASCADE
@@ -51,10 +51,10 @@ CREATE TABLE prices_split
 (
 	date DATE NOT NULL,
 	symbol VARCHAR(5) NOT NULL,
-	open  DECIMAL(6,6) NOT NULL,
-	close DECIMAL(6,6) NOT NULL,
-	low   DECIMAL(6,6) NOT NULL,
-	high	 DECIMAL(6,6) NOT NULL,
+	open  DECIMAL(10,6) NOT NULL,
+	close DECIMAL(10,6) NOT NULL,
+	low   DECIMAL(10,6) NOT NULL,
+	high  DECIMAL(10,6) NOT NULL,
 	volume INT,
 	CONSTRAINT FOREIGN KEY (symbol) REFERENCES securities (symbol)
 		ON DELETE CASCADE
