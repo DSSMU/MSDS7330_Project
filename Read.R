@@ -50,8 +50,8 @@ ggplot(mostGrowth, aes(SD, growth, colour = symbol)) +
 
 # Line graph of highest growth and lowest growth stocks
   # create graphable data
-HLgraphData <- data.frame(high = high,
-                          low = LgrowthPrices['open'][[1]],
+HLgraphData <- data.frame(high  = HgrowthPrices['open'][[1]],
+                          low   = LgrowthPrices['open'][[1]],
                           dates = as.Date(HgrowthPrices['date'][[1]]))
 
 ggplot(HLgraphData, aes(dates)) + 
