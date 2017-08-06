@@ -49,6 +49,15 @@ ggplot(mostGrowth, aes(SD, growth, colour = symbol)) +
   ggtitle("Growth vs. volatility")
 
 # Line graph of highest growth and lowest growth stocks
-HgrowthPrices['date2'] <- as.Date(HgrowthPrices['date'][[1]])
-ggplot(graphable, aes(date2)) + geom_line(y = open)
+  # create graphable data
+HLgraphData <- data.frame(high = high,
+                          low = LgrowthPrices['open'][[1]],
+                          dates = as.Date(HgrowthPrices['date'][[1]]))
+
+ggplot(HLgraphData, aes(dates)) + 
+  geom_line(aes(y = high, color = "AES")) +
+  geom_line(aes(y = low,  color = "FTR")) +
+  ylab("Price") + xlab("Date") +
+  ggtitle("Highest and Lowest Growth")
+
 
