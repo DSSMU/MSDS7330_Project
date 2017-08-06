@@ -7,3 +7,9 @@ SELECT symbol, stddev(high) as SD, max(high) - min(low) as growth
 	FROM prices_split 
 	GROUP BY symbol 
 	ORDER BY SD DESC LIMIT 10;
+# Find smallest growth stock
+SELECT * FROM 
+	(
+		SELECT symbol, max(high)-min(low) AS growth FROM prices_split
+		GROUP BY symbol
+	) AS subTable ORDER BY growth ASC LIMIT 1;
