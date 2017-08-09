@@ -17,3 +17,17 @@ SELECT * FROM
 SELECT Profit_Margin, fundamentals.symbol, open, date FROM
 	fundamentals JOIN prices_split ON fundamentals.symbol = prices_split.symbol
 	ORDER BY Profit_Margin DESC;
+
+#INSIGHT 3 GCIS_Sub_Industry growth
+
+SELECT GICS_Sub_Industry , avg(newhigh)-Avg(newlow) as avg_growth
+FROM(
+	SELECT avg(high) as newhigh, avg(low) as newlow, GICS_Sub_Industry
+	from (
+		SELECT * 
+		FROM securities natural join prices_split) as combined
+		group by symbol
+		) as temp
+group by GICS_Sub_Industry
+Order BY avg_growth desc;
+
