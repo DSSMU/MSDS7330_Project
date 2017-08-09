@@ -31,3 +31,8 @@ FROM(
 group by GICS_Sub_Industry
 Order BY avg_growth desc;
 
+SELECT MAX(high) - min(low) AS growth, capital_expenditures, YEAR(date), Earnings_Before_Tax, fundamentals.symbol
+FROM prices_split JOIN fundamentals ON
+	prices_split.symbol = fundamentals.symbol AND For_Year = YEAR(date)  
+WHERE prices_split.symbol = "AMZN"
+GROUP BY symbol, YEAR(date) LIMIT 10;

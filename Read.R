@@ -41,7 +41,23 @@ LgrowthPrices <- dbFetch(dbSendQuery(conn,
 # clear MySQL connection
 dbClearResult(dbListResults(conn)[[1]])
 
+HProfitPrices <- dbFetch(dbSendQuery(conn,
+      "SELECT Profit_Margin, fundamentals.symbol, open, date 
+      FROM fundamentals JOIN prices_split ON fundamentals.symbol = prices_split.symbol
+      ORDER BY Profit_Margin DESC;"))
+
+# clear MySQL connection
+dbClearResult(dbListResults(conn)[[1]])
+
+AMZNEarnings <- dbFetch(dbSendQuery(conn,
+      "SELECT MAX(high) - min(low) growth, capital_expenditures, YEAR(date), Earnings_Before_Tax, fundamentals.symbol FROM 
+  	  prices_split join fundamentals on
+      prices_split.symbol = fundamentals.symbol AND For_Year = YEAR(date)  
+      WHERE prices_split.symbol = \"AMZN\"
+      GROUP BY symbol, YEAR(date) LIMIT 10;"))
+
 RMySQL::dbDisconnect(conn)
+
 
 # Point plot of growth vs standard deviation of top 'growth' stocks.
 ggplot(mostGrowth, aes(SD, growth, colour = symbol)) +
@@ -60,4 +76,21 @@ ggplot(HLgraphData, aes(dates)) +
   ylab("Price") + xlab("Date") +
   ggtitle("Highest and Lowest Growth")
 
+# Create matrix for rectangle sizes.
+rectDims <- matrix(
+  c(
+    abs(AMZNEarnings$Earnings_Before_Tax) / max(abs(AMZNEarnings$Earnings_Before_Tax)),
+    abs(AMZNEarnings$capital_expenditures) / max(abs(AMZNEarnings$capital_expenditures))),
+  nrow = length(AMZNEarnings$capital_expenditures),
+  ncol = 2)
 
+# Rectangle plot
+symbols(x = AMZNEarnings$`YEAR(date)`, 
+        y = AMZNEarnings$growth, 
+        rectangles = rectDims, 
+        xlab = 'year', 
+        ylab = 'earnings',
+        main = 'AMZN Absolute expenditure/earnings vs. Growth per year',
+        fg = "red", #colour(s) the symbols are to be drawn in.
+        ylim = c(20,600), xlim = c(2012.5,2015.8)
+)
