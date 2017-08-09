@@ -142,5 +142,8 @@ CREATE TABLE fundamentals (
  	Treasury_Stock TINYINT NOT NULL,
  	For_Year SMALLINT,
  	Earnings_Per_Share TINYINT,
- 	Estimated_Shares_Outstanding BIGINT
+ 	Estimated_Shares_Outstanding BIGINT,
+	CONSTRAINT FOREIGN KEY(symbol) REFERENCES securities(symbol)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE
  );

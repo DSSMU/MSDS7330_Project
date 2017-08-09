@@ -13,3 +13,7 @@ SELECT * FROM
 		SELECT symbol, max(high)-min(low) AS growth FROM prices_split
 		GROUP BY symbol
 	) AS subTable ORDER BY growth ASC LIMIT 1;
+
+SELECT Profit_Margin, fundamentals.symbol, open, date FROM
+	fundamentals JOIN prices_split ON fundamentals.symbol = prices_split.symbol
+	ORDER BY Profit_Margin DESC;
