@@ -76,7 +76,7 @@ ggplot(HLgraphData, aes(dates)) +
   ylab("Price") + xlab("Date") +
   ggtitle("Highest and Lowest Growth")
 
-# Create matrix for rectangle sizes.
+# Create matrix for rectangle sizes.  
 rectDims <- matrix(
   c(
     abs(AMZNEarnings$Earnings_Before_Tax) / max(abs(AMZNEarnings$Earnings_Before_Tax)),
