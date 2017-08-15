@@ -36,3 +36,13 @@ FROM prices_split JOIN fundamentals ON
 	prices_split.symbol = fundamentals.symbol AND For_Year = YEAR(date)  
 WHERE prices_split.symbol = "AMZN"
 GROUP BY symbol, YEAR(date) LIMIT 10;
+
+
+# Insight 5
+SELECT DISTINCT GICS_Sector, `security`, MAX(Earnings_Per_Share)
+FROM fundamentals
+INNER JOIN securities	
+	ON fundamentals.symbol = securities.symbol
+WHERE For_Year = 2016 
+GROUP BY GICS_Sector
+ORDER BY MAX(Earnings_Per_Share) DESC;
