@@ -39,7 +39,7 @@ GROUP BY symbol, YEAR(date) LIMIT 10;
 
 
 # Insight 5
-SELECT DISTINCT GICS_Sector, `security`, MAX(Earnings_Per_Share)
+SELECT DISTINCT GICS_Sector, `security`, MAX(Earnings_Per_Share) AS `Max EPS`
 FROM fundamentals
 INNER JOIN securities	
 	ON fundamentals.symbol = securities.symbol
