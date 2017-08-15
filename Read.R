@@ -1,4 +1,5 @@
 library(RMySQL)
+library(ggplot2)
 
 conn <- RMySQL::dbConnect(RMySQL::MySQL(), "stocks", "root")
 RMySQL::dbGetInfo(conn)
@@ -56,9 +57,17 @@ AMZNEarnings <- dbFetch(dbSendQuery(conn,
       WHERE prices_split.symbol = \"AMZN\"
       GROUP BY symbol, YEAR(date) LIMIT 10;"))
 
+
+###################################################
+ # Close MySQL connection.                       #
+###################################################
 RMySQL::dbDisconnect(conn)
+###################################################
+ #                                               #
+###################################################
 
-
+# Update order of dataframe from highest growth to smallest.
+mostGrowth$symbol <- with(mostGrowth, reorder(symbol, -growth, order=TRUE))
 # Point plot of growth vs standard deviation of top 'growth' stocks.
 ggplot(mostGrowth, aes(SD, growth, colour = symbol)) +
   geom_point() +
