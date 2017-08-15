@@ -2,12 +2,12 @@ library(RMySQL)
 library(ggplot2)
 
 conn <- RMySQL::dbConnect(RMySQL::MySQL(), "stocks", "root")
-RMySQL::dbGetInfo(conn)
-RMySQL::dbListTables(conn)
+# RMySQL::dbGetInfo(conn)
+# RMySQL::dbListTables(conn)
 
 # Return a data frame representation of MySQL table
-securities <- RMySQL::dbReadTable(conn, "securities")
-prices     <- RMySQL::dbReadTable(conn, "prices_split")
+# securities <- RMySQL::dbReadTable(conn, "securities")
+# prices     <- RMySQL::dbReadTable(conn, "prices_split")
 
 
 mostGrowth <- dbFetch(dbSendQuery(conn, 
@@ -31,7 +31,7 @@ lowestGrowth <- dbFetch(dbSendQuery(conn,
 # clear MySQL connection
 dbClearResult(dbListResults(conn)[[1]])
 
-HgrowthPrices <- dbFetch(dbSendQuery(conn,"Select * FROM prices_split WHERE symbol = 'AGN';"))
+HgrowthPrices <- dbFetch(dbSendQuery(conn,"SELECT * FROM prices_split WHERE symbol = 'PCLN';"))
 
 # clear MySQL connection
 dbClearResult(dbListResults(conn)[[1]])
@@ -80,7 +80,7 @@ HLgraphData <- data.frame(high  = HgrowthPrices['open'][[1]],
                           dates = as.Date(HgrowthPrices['date'][[1]]))
 
 ggplot(HLgraphData, aes(dates)) + 
-  geom_line(aes(y = high, color = "AES")) +
+  geom_line(aes(y = high, color = "PCLN")) +
   geom_line(aes(y = low,  color = "FTR")) +
   ylab("Price") + xlab("Date") +
   ggtitle("Highest and Lowest Growth")
